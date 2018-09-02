@@ -6,14 +6,14 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 class Commands {
-    private static Md5Executor md5Executor = null;
-    private static String Path = null;
+    private Md5Executor md5Executor = null;
+    private String Path = null;
 
-    private static String GetText(File file) throws IOException {
+    private String GetText(File file) throws IOException {
         return new String(Files.readAllBytes(Paths.get(file.toURI())));
     }
 
-    static String Set(String path) {
+    String Set(String path) {
         File file = new File(path);
         if (!file.exists())
             return null;
@@ -27,13 +27,13 @@ class Commands {
         return null;
     }
 
-    static String List() {
+    String List() {
         if (Path == null)
             return "need set path";
         return md5Executor.DirInfo();
     }
 
-    static String Hash() throws IOException {
+    String Hash() throws IOException {
         if (md5Executor == null)
             return "no information list, md5Executor not init";
         else {

@@ -19,26 +19,27 @@ public class ClientThread extends ThreadTask {
         try {
             DataInputStream inputStream = new DataInputStream(clientSoket.getInputStream());
             DataOutputStream outputStream = new DataOutputStream(clientSoket.getOutputStream());
+            Commands engine = new Commands();
             boolean loop = true;
             while (!clientSoket.isClosed() && loop) {
                 String[] data = inputStream.readUTF().split(" ");
                 switch (data[0]) {
                     case "set":
                         if (data.length == 2)
-                            Send(outputStream, "setup: " + Commands.Set(data[1]));
+                            Send(outputStream, "setup: " + engine.Set(data[1]));
                         else
                             Send(outputStream, "wrong command");
                         break;
                     case "list":
                         if (data.length == 1)
-                            Send(outputStream, Commands.List());
+                            Send(outputStream, engine.List());
                         else
                             Send(outputStream, "wrong command");
                         break;
                     case "hash":
                         if (data.length == 1) {
                             try {
-                                Send(outputStream, Commands.Hash());
+                                Send(outputStream, engine.Hash());
                             } catch (Exception e) {
                                 Send(outputStream, "wrong command");
                                 Send(outputStream, e.toString());
@@ -63,6 +64,7 @@ public class ClientThread extends ThreadTask {
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
+        } finally {
             Terminate();
         }
     }
@@ -76,7 +78,6 @@ public class ClientThread extends ThreadTask {
                         clientSoket.getPort())
         );
         clientSoket.close();
-        Terminate();
     }
 
     private void Send(DataOutputStream outputStream, String data) throws IOException {
