@@ -58,7 +58,12 @@ public class ClientThread extends ThreadTask {
             }
             DisruptionConnection(inputStream, outputStream);
         } catch (Exception e) {
-            e.printStackTrace();
+            try {
+                clientSoket.close();
+            } catch (IOException e1) {
+                e1.printStackTrace();
+            }
+            Terminate();
         }
     }
 

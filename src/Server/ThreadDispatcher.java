@@ -42,7 +42,7 @@ public class ThreadDispatcher {
     }
 
     synchronized void DeleteThread(Long id) {
-        Threads.get(id).getKey().stop();
+        Thread th = Threads.get(id).getKey();
         threadMonitor.SendWriteSignal();
         System.out.println("killed - " + id + " " + Threads.get(id).getValue().threadName);
         Threads.remove(id);
@@ -51,5 +51,6 @@ public class ThreadDispatcher {
                 IDs.remove(i);
                 break;
             }
+        th.stop();
     }
 }

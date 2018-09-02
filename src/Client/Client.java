@@ -38,7 +38,7 @@ class Client {
                     if (line.endsWith("exit"))
                         break;
                     else {
-                        System.out.println("Server answer :\n\t" + line);
+                        System.out.println("Server answer :\n" + line);
                     }
                 }
             } catch (Exception e) {

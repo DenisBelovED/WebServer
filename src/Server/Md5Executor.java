@@ -10,7 +10,9 @@ public class Md5Executor extends FileWorker {
     private String HashFile;
 
     String DirInfo() {
-        return Dir.listFiles() == null ? "this is not directory" : Arrays.toString(Dir.listFiles());
+        String ans = Arrays.toString(Dir.listFiles());
+        ans = ans.replaceAll("[\\[\\] ]", "").replace(',', '\n');
+        return Dir.listFiles() == null ? "this is not directory" : ans;
     }
 
     public String getHashDir() {
